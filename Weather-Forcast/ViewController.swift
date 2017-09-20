@@ -2,7 +2,7 @@
 //  ViewController.swift
 //  Weather-Forcast
 //
-//  Created by Brandon Innis on 5/17/17.
+//  Created by Brandon Innis on 5/03/17.
 //  Copyright © 2017 Brandon Innis. All rights reserved.
 //
 
@@ -10,9 +10,11 @@ import UIKit
 import Alamofire
 import CoreLocation
 
-class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource {
+class ViewController: UIViewController, CLLocationManagerDelegate, UISearchBarDelegate {
     
     
+ // IBO conenctions to the frontend of the app
+    @IBOutlet weak var searchBar: UISearchBar!
     
     @IBOutlet weak var datelbl: UILabel!
     
@@ -28,48 +30,76 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
     
    
     
-    var long: Double = 0.0
-    var lat : Double = 0.0
     let manager = CLLocationManager()
-    
+  
     var currentlocation: CLLocation!
+    
+    // function checks if user agrees for the app to use his or location
     func auth_status (){
-        if CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
+        // if runs when the user click yes
+        if CLLocationManager.authorizationStatus() == .authorizedWhenInUse
+        {
             currentlocation = manager.location
-            long = (manager.location?.coordinate.longitude)!
-            lat = (manager.location?.coordinate.latitude)!
-            lat_num = lat
-            long_num = long
+            // gets the longitude
+            long_num = (manager.location?.coordinate.longitude)!
+            //  gets the latitude
+            lat_num = (manager.location?.coordinate.latitude)!
+            // sends the request
+            current_url = request_url + lat + String(lat_num) + long + String(long_num) + id_number + api_key
+            
+            // parse throught the data and set it to the currentweather object
             currentWeather.weather_info {
-                self.forcast_data {
+                    // updates the front end with the new data
                     self.update_table()
-                }
+                                        }
                 
                 
-            }
-            print(long)
-            print(lat)
-            print("hiiiiiiiiiiiii")
+          
             
         }
+        // runs when user clicks no
         else {
-            manager.requestWhenInUseAuthorization()
-            auth_status()
-        }
-    }
+            //manager.requestWhenInUseAuthorization()
+            //auth_status()
+            }
+                        }
     
     
    
     
     var currentWeather: CurrentWeather!
-    var forecast: Forecast!
-    var forecasts = [Forecast]()
-  
+    
+    // handles when user wants to search for a city or town
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        // removes the space in the city or town name
+        var city = searchBar.text!.replacingOccurrences(of: " ", with: "%20");
+        // if user types in Current location
+        if searchBar.text! == "Current location" {
+            auth_status()
+            // closes keyboard
+            searchBar.endEditing(true)
+        }
+        // when use types in a city or town name and not current location
+        else{
+            
+        
+        current_url = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + api_key
+        searchBar.endEditing(true)
+           // updates the currentweather
+        currentWeather.weather_info {
+            
+            self.update_table()
+        }
+        }
+        
+    }
    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         manager.delegate = self
+        searchBar.delegate = self
+        
         manager.desiredAccuracy = kCLLocationAccuracyBest
         manager.requestWhenInUseAuthorization()
         manager.startMonitoringSignificantLocationChanges()
@@ -77,47 +107,18 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UITableViewDe
         
         currentWeather = CurrentWeather()
             }
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.auth_status()
     }
     
-    func forcast_data(completed: DownloadComplete) {
-          // download forcast data for weather tableview
-        let forecastUrl = URL(string: current_url)!
-        Alamofire.request(forecastUrl).responseJSON { response in
-            let result = response.result
-            if let dict = result.value as? Dictionary<String, AnyObject> {
-                if let list = dict["list"] as? [Dictionary<String, AnyObject>] {
-                    for obj in list {
-                        let forecast = Forecast(weatherDict: obj)
-                        self.forecasts.append(forecast)
-                        
-                        
-                    }
-                }
-            }
-        }
-            completed()
-        
-        
-    }
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 6
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "weather_cell", for: indexPath)
-        return cell
-    }
-    
-    func update_table(){
+
+        // updates the frontend with the new info
+    func update_table()
+    {
         datelbl.text = currentWeather.date
-        current_templbl.text = String(currentWeather.currentTemp)
+        current_templbl.text = String(Int(currentWeather.currentTemp)) + "°"
         current_weatherlbl.text = currentWeather.weatherType
         locationlbl.text = currentWeather.cityName
         current_weather_img.image = UIImage(named: currentWeather.weatherType)

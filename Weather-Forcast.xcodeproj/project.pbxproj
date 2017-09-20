@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0F2E3B501ECF946700F42D2C /* Forecast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2E3B4F1ECF946700F42D2C /* Forecast.swift */; };
+		0F2541031F679BEE0031D4ED /* Secret.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2541021F679BEE0031D4ED /* Secret.swift */; };
 		0F64FD8B1ECD41FD00BB9A61 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F64FD8A1ECD41FD00BB9A61 /* AppDelegate.swift */; };
 		0F64FD8D1ECD41FE00BB9A61 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F64FD8C1ECD41FE00BB9A61 /* ViewController.swift */; };
 		0F64FD901ECD41FE00BB9A61 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0F64FD8E1ECD41FE00BB9A61 /* Main.storyboard */; };
@@ -38,7 +38,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0F2E3B4F1ECF946700F42D2C /* Forecast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Forecast.swift; sourceTree = "<group>"; };
+		0F2541021F679BEE0031D4ED /* Secret.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Secret.swift; sourceTree = "<group>"; };
 		0F64FD871ECD41FC00BB9A61 /* Weather-Forcast.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Weather-Forcast.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F64FD8A1ECD41FD00BB9A61 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0F64FD8C1ECD41FE00BB9A61 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -123,8 +123,8 @@
 				0FD8266A1ECE44DD00814099 /* CurrentWeather.swift */,
 				0F64FD8E1ECD41FE00BB9A61 /* Main.storyboard */,
 				0FD826661ECE3F5100814099 /* json_constants.swift */,
+				0F2541021F679BEE0031D4ED /* Secret.swift */,
 				0F64FD911ECD420000BB9A61 /* Assets.xcassets */,
-				0F2E3B4F1ECF946700F42D2C /* Forecast.swift */,
 				0F64FD931ECD420000BB9A61 /* LaunchScreen.storyboard */,
 				0F64FD961ECD420100BB9A61 /* Info.plist */,
 			);
@@ -345,10 +345,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				0F64FD8D1ECD41FE00BB9A61 /* ViewController.swift in Sources */,
+				0F2541031F679BEE0031D4ED /* Secret.swift in Sources */,
 				0FD826671ECE3F5100814099 /* json_constants.swift in Sources */,
 				0FD8266B1ECE44DD00814099 /* CurrentWeather.swift in Sources */,
 				0F64FD8B1ECD41FD00BB9A61 /* AppDelegate.swift in Sources */,
-				0F2E3B501ECF946700F42D2C /* Forecast.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -503,11 +503,13 @@
 			baseConfigurationReference = 949E5E4E728A3F35D219D641 /* Pods-Weather-Forcast.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = XL9L3UE85C;
 				INFOPLIST_FILE = "Weather-Forcast/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "brandoninnis.Weather-Forcast";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -517,11 +519,13 @@
 			baseConfigurationReference = E4FA6E3462A785EF96B20B40 /* Pods-Weather-Forcast.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = XL9L3UE85C;
 				INFOPLIST_FILE = "Weather-Forcast/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "brandoninnis.Weather-Forcast";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

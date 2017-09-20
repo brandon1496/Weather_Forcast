@@ -2,13 +2,13 @@
 //  CurrentWeather.swift
 //  Weather-Forcast
 //
-//  Created by Brandon Innis on 5/18/17.
+//  Created by Brandon Innis on 5/06/17.
 //  Copyright © 2017 Brandon Innis. All rights reserved.
 //
 
 import UIKit
 import Alamofire
-
+// class to hold the weather data
 class CurrentWeather {
     var _cityname: String!
     var _date: String!
@@ -21,11 +21,12 @@ class CurrentWeather {
         }
         return _cityname
     }
-    
+    //
     var date: String {
         if _date == nil {
             _date = ""
         }
+        // formats the date
         let dateFormattor = DateFormatter()
         dateFormattor.dateStyle = .long
         dateFormattor.timeStyle = .none
@@ -49,17 +50,19 @@ class CurrentWeather {
         return _currentTemp
     }
     
-    
+    // funcetion that handles interating with the data and parsing through the given data
     func weather_info(completed: @escaping DownloadComplete) {
         //Alamofire download
         let currentWeatherUrl = URL(string: current_url)!
+      
         Alamofire.request(currentWeatherUrl).responseJSON { response in
             let result = response.result
-         
+           
      
             if let dict = result.value as? Dictionary<String, AnyObject> {
                 if let name = dict["name"] as? String{
                     self._cityname = name.capitalized
+                    
                    
                 }
                 if let weather = dict["weather"] as? [Dictionary<String, AnyObject>] {
@@ -74,6 +77,7 @@ class CurrentWeather {
                         let kevlin_toF = (currentTemp * (9/5) - 459.67)
                         let final_temp = Double(round(10 * kevlin_toF/10))
                         self._currentTemp = final_temp
+                        
                        
                     }
                 }
@@ -86,8 +90,7 @@ class CurrentWeather {
     }
     
     
-
-
-    
+// needed whenever you are downloading info
+typealias DownloadComplete = () -> ()    
     
 }
